@@ -7,6 +7,9 @@
    - 주소 끝의 ?unit=3-1 을 읽어 지금 단원을 UNIT.current 로 알려 준다.
      (단원 폴더 3-1/index.html 이 이 주소로 넘겨 준다)
    - 주소에 단원이 없거나 없는 단원이면 UNIT.current = null → 게임은 단원 목록 화면을 보여 준다.
+   - 단, unit-data.js 에 단원이 하나뿐이면(CMS 등록용 단원별 zip) 주소 없이도 그 단원으로 연다.
+   - UNIT.topicDir('국가와 자연') → 'country_nature' : 주제 폴더의 영문 이름
+     (CMS가 한글 경로를 못 읽어 녹음 폴더 이름을 영문으로 바꿨다. 지시서 규칙 5)
    ===================================================================== */
 (function () {
   var data = window.UNIT_DATA || { game: '', units: [] };
@@ -14,6 +17,15 @@
   var requested = m ? decodeURIComponent(m[1]).trim().toLowerCase() : '';
   var current = null;
   data.units.forEach(function (u) { if (u.key === requested) current = u; });
+  if (!current && !requested && data.units.length === 1) current = data.units[0];
+
+  var TOPIC_DIR = {
+    '국가와 자연': 'country_nature', '동작': 'action', '물건': 'things',
+    '사람과 동물': 'people_animals', '숫자·색깔·시간': 'number_color_time',
+    '음식과 음료': 'food_drink', '장소·교통·방향': 'place_transport_direction',
+    '취미·과목·직업': 'hobby_subject_job', '특징과 감정': 'feature_feeling'
+  };
+  function topicDir(name) { return TOPIC_DIR[name] || encodeURIComponent(name); }
 
   // "Lesson 1. Hi, I'm Olly" → { lesson: "Lesson 1", name: "Hi, I'm Olly" }
   function splitTitle(u) {
@@ -66,6 +78,7 @@
     unitsOf: unitsOf,
     splitTitle: splitTitle,
     label: label,
-    go: go
+    go: go,
+    topicDir: topicDir
   };
 })();

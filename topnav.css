@@ -30,7 +30,7 @@
   /* 그림 속 흰 판 안쪽만 지름 84px 원으로 잘라 쓴다 — 판 아래 그림자 선이 들어오지 않게.
      크기: 1912/84 = 2276.19%, 140/84 = 166.67%
      위치: 가로 (흰 판 중심x - 42) / (1912 - 84), 세로 (흰 판 중심y - 42) / (140 - 84) */
-  background-image:url('상단바.png') !important; background-repeat:no-repeat !important;
+  background-image:url('topbar.png') !important; background-repeat:no-repeat !important;
   background-size:2276.19% 166.67% !important;
   box-shadow:0 6px 16px rgba(35,45,70,.20), 0 1px 3px rgba(35,45,70,.14) !important;
 }

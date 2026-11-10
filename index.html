@@ -2191,7 +2191,7 @@
 <!-- 배경음악은 1MB 라 미리 받으면 첫 화면이 늦게 뜬다.
      preload="none" 으로 두고, 사용자가 처음 화면을 누른 뒤에 받아서 재생한다 -->
 <audio id="bg-music" loop preload="none">
-  <source src="background music.mp3" type="audio/mpeg">
+  <source src="icecream_bgm.mp3" type="audio/mpeg">
 </audio>
 <!-- 인트로 · 주제 선택 화면에서 나오는 음악 (게임 화면부터는 위 배경음악으로 바뀐다).
      3.2MB 라 미리 받지 않고, 사용자가 처음 화면을 누른 뒤에 받아서 재생한다.
@@ -2199,7 +2199,7 @@
      주소로 바꿔 주고, 이 파일의 다른 소리들(background music.mp3 · 성공.mp3)도 같은 방식이다.
      %-표기로 적으면 점검 도구가 실제 파일과 대조하지 못한다 -->
 <audio id="intro-music" loop preload="none">
-  <source src="인트로 음악.mp3" type="audio/mpeg">
+  <source src="intro_music.mp3" type="audio/mpeg">
 </audio>
 <audio id="correct-sound">
   <source src="correct.mp3" type="audio/mpeg">
@@ -2209,15 +2209,15 @@
 </audio>
 <!-- 한 문제를 끝냈을 때 나오는 소리. 자판을 누를 때 나는 correct/wrong 과 구분된다 -->
 <audio id="round-success-sound" preload="none">
-  <source src="성공.mp3" type="audio/mpeg">
+  <source src="success.mp3" type="audio/mpeg">
 </audio>
 <audio id="round-fail-sound" preload="none">
-  <source src="실패.mp3" type="audio/mpeg">
+  <source src="fail.mp3" type="audio/mpeg">
 </audio>
 <!-- Hint 버튼을 눌렀을 때 나오는 알림 (anagram game 과 같은 소리).
      62KB 라 미리 받아 둬야 누르는 즉시 소리가 난다 -->
 <audio id="hint-sound" preload="auto">
-  <source src="힌트 알림.mp3" type="audio/mpeg">
+  <source src="hint_alert.mp3" type="audio/mpeg">
 </audio>
 
 <!-- 세로로 든 휴대폰 안내. fitStage 가 화면 모양을 보고 켜고 끈다 -->
@@ -3124,7 +3124,7 @@
   // 녹음이 없는 단어는 null → 기기 음성(speakVoice)으로 읽는다
   function voiceSrc(word) {
     const hit = VOICE_INDEX[(word || '').toLowerCase()];
-    return hit ? encodeURIComponent(hit[0]) + '/' + encodeURIComponent(hit[1]) + '.mp3' : null;
+    return hit ? UNIT.topicDir(hit[0]) + '/' + encodeURIComponent(hit[1]) + '.mp3' : null;
   }
 
   /* 녹음 파일이 없는 단원 단어는 기기 음성(TTS)으로 읽는다.
