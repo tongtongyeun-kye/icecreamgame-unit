@@ -2260,6 +2260,7 @@
 </div>
 <script src="topnav.js" data-backdrop="0.jpg"></script>
 <script src="unit-data.js"></script>
+<script src="unit-media.js"></script>
 <script src="unit.js"></script>
 <script src="sfx.js"></script>
 
@@ -3123,6 +3124,7 @@
   // 폴더 이름(한글)과 단어(띄어쓰기 포함)를 주소로 쓸 수 있게 인코딩한다.
   // 녹음이 없는 단어는 null → 기기 음성(speakVoice)으로 읽는다
   function voiceSrc(word) {
+    const unitSrc = UNIT.audio(word); if (unitSrc) return unitSrc;   // 단원별 게임 음성을 먼저 쓴다
     const hit = VOICE_INDEX[(word || '').toLowerCase()];
     return hit ? UNIT.topicDir(hit[0]) + '/' + encodeURIComponent(hit[1]) + '.mp3' : null;
   }

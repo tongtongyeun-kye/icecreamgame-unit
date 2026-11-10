@@ -10,6 +10,9 @@
    - 단, unit-data.js 에 단원이 하나뿐이면(CMS 등록용 단원별 zip) 주소 없이도 그 단원으로 연다.
    - UNIT.topicDir('국가와 자연') → 'country_nature' : 주제 폴더의 영문 이름
      (CMS가 한글 경로를 못 읽어 녹음 폴더 이름을 영문으로 바꿨다. 지시서 규칙 5)
+   - UNIT.audio('ice cream') → 'unit_audio/ice%20cream.mp3' : 단원별 게임 음성 (없으면 null)
+     UNIT.image('glue stick') → 'unit_image/grade3/glue_stick.png' : 단원별 게임 이미지 (지금 단원 학년 기준, 없으면 null)
+     목록은 unit-media.js(window.UNIT_MEDIA)에 있다. 이 파일을 안 넣은 게임은 늘 null.
    ===================================================================== */
 (function () {
   var data = window.UNIT_DATA || { game: '', units: [] };
@@ -26,6 +29,19 @@
     '취미·과목·직업': 'hobby_subject_job', '특징과 감정': 'feature_feeling'
   };
   function topicDir(name) { return TOPIC_DIR[name] || encodeURIComponent(name); }
+
+  // 단원별 게임 음성·이미지 (unit-media.js)
+  var media = window.UNIT_MEDIA || { audio: {}, image: {} };
+  function audio(en) {
+    var f = media.audio[String(en || '').trim().toLowerCase()];
+    return f ? 'unit_audio/' + encodeURIComponent(f) + '.mp3' : null;   // 목록에는 확장자 없이 이름만 있다
+  }
+  function image(en, grade) {
+    grade = grade || (current && current.grade);
+    var list = media.image[grade] || {};
+    var f = list[String(en || '').trim().replace(/\.$/, '').replace(/ /g, '_').toLowerCase()];
+    return f ? 'unit_image/grade' + grade + '/' + encodeURIComponent(f) + '.png' : null;
+  }
 
   // "Lesson 1. Hi, I'm Olly" → { lesson: "Lesson 1", name: "Hi, I'm Olly" }
   function splitTitle(u) {
@@ -79,6 +95,8 @@
     splitTitle: splitTitle,
     label: label,
     go: go,
-    topicDir: topicDir
+    topicDir: topicDir,
+    audio: audio,
+    image: image
   };
 })();
